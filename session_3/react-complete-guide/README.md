@@ -53,3 +53,5 @@ The parent sends a function to child to get the data
 3. Force the child to give the data into the function
 
 4. The function gives back the data to the parent
+
+In react we cannot pass data between two children components directly, but we can do it as passing the data to their parent component and from there we can get the data to the child component.
