@@ -1,7 +1,19 @@
 # React
 
-A legbiztosabb módja annak, hogy a state-k mindig a legújabbak legyenek az alábbi módszerrel érhetőek el:
+The best practice to get the most updated states:
 
+1. 
+
+```js
+...
+const [state, setState] = useState(0);
+
+const handleState = () => {
+  setState(previousState => previousState + 1)
+}
+```
+
+2. 
 ```js
 ...
  const [userInput, setUserInput] = useState({
@@ -29,3 +41,5 @@ A legbiztosabb módja annak, hogy a state-k mindig a legújabbak legyenek az al�
   };
   ...
 ```
+
+Passing data from child to parent
