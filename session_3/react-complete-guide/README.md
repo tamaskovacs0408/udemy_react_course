@@ -1,6 +1,6 @@
 # React
 
-The best practice to get the most updated states:
+## The best practice to get the most updated states:
 
 1. 
 
@@ -42,4 +42,14 @@ const handleState = () => {
   ...
 ```
 
-Passing data from child to parent
+## Passing data from child to parent
+
+The parent sends a function to child to get the data
+
+1. Create a function in the parent to get the data
+
+2. Send the function to child
+
+3. Force the child to give the data into the function
+
+4. The function gives back the data to the parent
