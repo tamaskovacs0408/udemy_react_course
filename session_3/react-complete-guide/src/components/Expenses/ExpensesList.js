@@ -1,6 +1,7 @@
 import "./ExpensesList.css";
+import ExpenseItem from "./ExpenseItem";
 
-const ExpensesList = () => {
+const ExpensesList = ({filteredExpenses}) => {
   return (
     filteredExpenses.map((expense) => {
         return (
@@ -16,3 +17,4 @@ const ExpensesList = () => {
 }
 
 export default ExpensesList;
+
