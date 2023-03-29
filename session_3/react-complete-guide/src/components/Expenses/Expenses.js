@@ -3,6 +3,7 @@ import "./Expenses.css";
 import ExpenseItem from "./ExpenseItem";
 import Card from "../UI/Card";
 import ExpensesFilter from "./ExpenseFilter";
+import ExpensesList from "./ExpensesList";
 
 const Expenses = ({ expenses }) => {
   const [filteredYear, setFilteredYear] = useState("2020");
