@@ -1,9 +1,14 @@
 import "./ExpensesList.css";
 import ExpenseItem from "./ExpenseItem";
 
-const ExpensesList = ({filteredExpenses}) => {
+const ExpensesList = ({ filteredExpenses }) => {
+  if (filteredExpenses.length === 0) {
+    return <p className="no-expense">No expenses found for this year.</p>;
+  }
+
   return (
-    filteredExpenses.map((expense) => {
+    <ul className="expenses-list">
+      {filteredExpenses.map((expense) => {
         return (
           <ExpenseItem
             key={expense.id}
@@ -12,9 +17,9 @@ const ExpensesList = ({filteredExpenses}) => {
             amount={expense.amount}
           />
         );
-      })
-  )
-}
+      })}
+    </ul>
+  );
+};
 
 export default ExpensesList;
-

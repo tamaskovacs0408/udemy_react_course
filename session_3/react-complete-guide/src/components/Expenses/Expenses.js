@@ -22,11 +22,7 @@ const Expenses = ({ expenses }) => {
           selected={filteredYear}
           onFilter={filterChangeHandler}
         />
-        {filteredExpenses.length === 0 ? (
-          <p className="no-expense">No expenses found for this year.</p>
-        ) : (
-         <ExpensesList filteredExpenses={filteredExpenses}/>
-        )}
+        <ExpensesList filteredExpenses={filteredExpenses} />
       </Card>
     </>
   );
