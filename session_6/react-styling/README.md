@@ -9,3 +9,9 @@ If the `isValid` state is not true, it adds the `invalid` class after the `form-
 <div className={`form-control ${!isValid ? "invalid" : ""}`}>
 ...
 ```
+
+## Styled Components
+
+Intallation:
+
+`npm install --save styled-components`
