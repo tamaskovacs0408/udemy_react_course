@@ -12,7 +12,7 @@ If the `isValid` state is not true, it adds the `invalid` class after the `form-
 
 ## Styled Components
 
-Intallation:
+Installation:
 
 `npm install --save styled-components`
 
@@ -41,4 +41,22 @@ const Button = styled.button`
     width: auto;
   }
 `
+```
+
+## CSS modules
+
+React projects have to be configured to css modules. The npm's `create-react-app` project is configured to css modules by default.
+
+The filename have to contains the `module` keyword. => `Button.module.css`
+
+In the component, import named the `module.css` file (the name is totally up to you). => `import styles from "./Button.module.css"`
+
+Then the css classes have to be added with the following syntax: (the class name, as it defined in the css file)
+
+```js
+import styles from "./Button.module.css"
+...
+<div className={styles.button} >
+    ...
+</div>    
 ```
