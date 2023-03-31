@@ -60,3 +60,13 @@ import styles from "./Button.module.css"
     ...
 </div>    
 ```
+
+If the class name not just a single word, but contains `-` or sg else, use the `styles["class-name"]` syntax to get the class.
+
+We can also use dynamical rendering with css modules too.
+
+```js
+<div className={`${styles["form-control"]} ${!isValid ? styles.invalid : null}`}> ...
+```
+
+Media queries works as like as in common css files.
