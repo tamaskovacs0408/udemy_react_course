@@ -17,3 +17,9 @@ Intallation:
 `npm install --save styled-components`
 
 We can pass prop into the styled components. If it passed, it can be used inside the styled component's ``-s.
+
+```js
+...
+background: ${props => props.invalid ? "rgba(250, 128, 114, 0.829)" : "transparent"};
+...
+```
