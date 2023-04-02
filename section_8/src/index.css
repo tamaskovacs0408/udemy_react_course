@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #1f1f1f;
+}
+
+body {
+  box-sizing: inherit;
+}
