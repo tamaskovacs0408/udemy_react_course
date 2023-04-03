@@ -7,7 +7,7 @@ const UsersList = ({ users }) => {
     <Card outerClass={style.users}>
          <ul>
       {users.map((user) => (
-        <li>
+        <li key={user.id}>
           {user.name} ({user.age} years old)
         </li>
       ))}
