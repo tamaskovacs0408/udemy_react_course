@@ -2,10 +2,10 @@ import Card from "./Card";
 import Button from "./Button";
 import style from "./ErrorModal.module.css";
 
-const ErrorModal = ({ title, message }) => {
+const ErrorModal = ({ title, message, onCloseModal }) => {
   return (
     <>
-      <div className={style.backdrop}>
+      <div className={style.backdrop} onClick={onCloseModal}>
         <Card outerClass={style.modal}>
           <header className={style.header}>
             <h2>{title}</h2>
@@ -14,7 +14,7 @@ const ErrorModal = ({ title, message }) => {
             <p>{message}</p>
           </div>
           <footer className={style.actions}>
-            <Button>Close</Button>
+            <Button onClick={onCloseModal}>Close</Button>
           </footer>
         </Card>
       </div>

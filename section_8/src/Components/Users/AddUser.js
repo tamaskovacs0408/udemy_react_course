@@ -9,6 +9,7 @@ import style from "./AddUser.module.css";
 const AddUser = ({ onAddUser }) => {
   const [enterUsername, setEnterUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
+  const [error, setError] = useState();
 
   const handleUsernameChange = (e) => {
     setEnterUsername(e.target.value);
@@ -17,19 +18,35 @@ const AddUser = ({ onAddUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (enterUsername.trim().length === 0 || enteredAge.trim().length === 0) {
-      return;
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid name.",
+      });
     }
     if (Number(enteredAge) < 1) {
-      return;
+      setError({
+        title: "Invalid age",
+        message: "Please enter a valid age.",
+      });
     }
     onAddUser(enterUsername, enteredAge);
     setEnterUsername("");
     setEnteredAge("");
   };
 
+  const handleError = () => {
+    setError(null);
+  };
+
   return (
     <>
-      <ErrorModal title="An error occured!" message="Something went wrong!" />
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onCloseModal={handleError}
+        />
+      )}
       <Card outerClass={style.input}>
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
