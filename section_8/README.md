@@ -60,3 +60,23 @@ return (
     </>
   );
 ```
+
+
+## useRef Hooks
+
+It takes a default value and returns a value we can work with.
+
+The `useRef` returns an object, and we can get the ref value with `refName.current.value`. This value also can be stored tina variable.
+
+Import `useRef` from `react`, then create a ref variable, which takes the `useRef()` method.
+
+To connect the ref with the HTML, in the JSX (where we'd like to use the ref), create a `ref` attribute and pass the created variable to it.
+
+```js
+import {useRef} from "react";
+...
+const nameInputRef = useRef();
+...
+
+<input type="text" ref={nameInputRef}/>
+```
