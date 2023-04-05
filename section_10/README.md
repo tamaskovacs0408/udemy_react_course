@@ -2,7 +2,7 @@
 
 `import { useEffect } from "react"`
 
-With the useEffect hook we can handling side effects of a React app. 
+With the useEffect hook we can handling side effects of a React app. Always add everything you refer to inside of useEffect as a dependency!
 
 It takes 2 arguments: `useEffect(()=> {}, [dependencies])`
 

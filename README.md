@@ -190,7 +190,14 @@ return (
   );
 ```
 
-## useRef Hooks
+## HOOKS
+
+Rules of hooks:
+
+- Only call React hooks in React Functions: React Component Functions, Custom Hooks
+- Only call React hooks at the top level: don't call them in nested functions, and in any block elements
+
+### useRef Hooks
 
 It takes a default value and returns a value we can work with.
 
