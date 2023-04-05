@@ -19,7 +19,22 @@ We can also implement a `setTimeout()` method inside the `useEffect` hook and se
 
 *Clean up function:*
 
-The `useEffect` hook can return a function after its first, function argument. This *clean up* function runs **before** the useEffet's function (it won't run before the very first side effect function) 
+The `useEffect` hook can return a function after its first, function argument. This *clean up* function runs **before** the useEffet's function (it won't run before the very first side effect function).
+
+```js
+
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      setFormIsValid(
+        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+      );
+    }, 500);
+    return () => {
+      clearTimeout(identifier);
+    };
+  }, [setFormIsValid, enteredEmail, enteredPassword]);
+
+```
 
  ## localStorage
 
