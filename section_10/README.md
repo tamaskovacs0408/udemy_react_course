@@ -13,6 +13,13 @@ It takes 2 arguments: `useEffect(()=> {}, [dependencies])`
 
  **The dependencies tell to the React app, that after every specified component (where the `useEffect` is used) execution rerun the function inside the `useEffect` hook, if one of the dependencies is changed. (Don't put the `useState`'s setState function into the dependencies) If neither of them is changed, the function won't run.**
 
+*Debouncing:*
+
+We can also implement a `setTimeout()` method inside the `useEffect` hook and set up that the function is delayed by a given time.
+
+*Clean up function:*
+
+The `useEffect` hook can return a function after its first, function argument. This *clean up* function runs **before** the useEffet's function (it won't run before the very first side effect function) 
 
  ## localStorage
 
