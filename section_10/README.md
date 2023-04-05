@@ -36,7 +36,7 @@ The `useEffect` hook can return a function after its first, function argument. T
 
 ```
 
- ## localStorage
+## localStorage
 
  In the browser's localStorage we can store infos of a webpage (e.g. logged in, session etc.).
 
@@ -54,3 +54,7 @@ The `useEffect` hook can return a function after its first, function argument. T
 
  const storedUserLogin = localStorage.getItem("isLoggedIn");
  ```
+
+### useReducer hook
+
+`useReducer()` hook can be used as a replacement of `useState` if a more powerful state management is needed. It's good to replace `useState`, when we have states that belong together and/or if have some state updates that depend on other state.
