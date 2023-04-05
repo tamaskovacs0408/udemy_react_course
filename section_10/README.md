@@ -9,6 +9,10 @@ It takes 2 arguments: `useEffect(()=> {}, [dependencies])`
  1. A function that should be executed after every component evaluation if the specified dependencies changed (the side effect codes go here)
  2. The dependencies of this effect -  the previous function only runs if THIS changes
 
+ In the dependencies we have to add all dependencies which are in the useEffect function.
+
+ **The dependencies tell to the React app, that after every specified component (where the `useEffect` is used) execution rerun the function inside the `useEffect` hook, if one of the dependencies is changed. (Don't put the `useState`'s setState function into the dependencies) If neither of them is changed, the function won't run.**
+
 
  ## localStorage
 
