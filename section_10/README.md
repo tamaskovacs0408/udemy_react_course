@@ -74,4 +74,12 @@ Because the explain of useReducer is a bit (not bit) chaotic, more of this can b
 
 The Context API is used for to replace passing states through components with props.
 
-Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that 
+Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that file we can declare the initial states. To reach this state(s), import this file in the `App.js` (because from here every component can reach the context) and wrap around the components with the `<contextName.Provider>{...}</contextName.Provider>`.
+
+Secondly in that component where we'd like to use the context import the `useContext` hook and the created context(s) as well. Create a variable and pass the `useContext` hook to it which is gets the context as argument.
+
+```js
+const somethingCtx = useContext(sgContext);
+```
+
+Now, we can reach the context's state through this variable (`somethingCtx.sgState`).
