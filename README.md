@@ -273,3 +273,18 @@ The `useEffect` hook can return a function after its first, function argument. T
   }, [setFormIsValid, enteredEmail, enteredPassword]);
 
 ``
+
+### useReducer hook
+
+`useReducer()` hook can be used as a replacement of `useState` if a more powerful state management is needed. It's good to replace `useState`, when we have states that belong together and/or if have some state updates that depend on other state.
+
+```js
+const [state, dispatchFunction] = useReducer(reducerFunction, initialState, initialFunction);
+```
+
+- In this example the `state` is the latest state snapshot used in the component,
+- and the `dispatchFunction` is a function that allows to update this state snapshot (it's like the useState's `state, setState`).
+- Inside the `useReducer`, the `reducerFunction` is a function that triggered automatically once an action is dispatched (via the `dispatchFunction`). It receives the latest state snapshot and should return the new, updated state.
+- The `intialState` and the `initialFunction` are ignored for now
+
+Because the explain of useReducer is a bit (not bit) chaotic, more of this can be read [here](https://github.com/tamaskovacs0408/web_tutorials/tree/master/usereducer_tutorial).
