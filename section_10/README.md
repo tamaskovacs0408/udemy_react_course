@@ -69,3 +69,7 @@ const [state, dispatchFunction] = useReducer(reducerFunction, initialState, init
 - The `intialState` and the `initialFunction` are ignored for now
 
 Because the explain of useReducer is a bit (not bit) chaotic, more of this can be read [here](https://github.com/tamaskovacs0408/web_tutorials/tree/master/usereducer_tutorial).
+
+### Context API - useContext hook
+
+The Context API is used for to replace passing states through components with props.
