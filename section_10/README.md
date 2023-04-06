@@ -73,3 +73,5 @@ Because the explain of useReducer is a bit (not bit) chaotic, more of this can b
 ### Context API - useContext hook
 
 The Context API is used for to replace passing states through components with props.
+
+Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that 
