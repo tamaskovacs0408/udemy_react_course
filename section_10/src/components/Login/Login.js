@@ -30,7 +30,7 @@ const Login = (props) => {
   // }, [setFormIsValid, enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
-    dispatchEmail({ type: "USER_INPUT", val: event.target.value });
+    dispatchEmail({ type: "USER_INPUT", payload: event.target.value });
     setFormIsValid(
       emailState.isValid && event.target.value.trim().length > 6
     );
