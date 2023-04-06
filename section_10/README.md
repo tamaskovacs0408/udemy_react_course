@@ -82,4 +82,4 @@ Secondly in that component where we'd like to use the context import the `useCon
 const somethingCtx = useContext(sgContext);
 ```
 
-Now, we can reach the context's state through this variable (`somethingCtx.sgState`).
+Now, we can reach the context's state through this variable (`somethingCtx.sgState`). 
