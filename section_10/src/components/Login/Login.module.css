@@ -5,68 +5,6 @@
   padding: 2rem;
 }
 
-.control {
-  margin: 1rem 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.control label,
-.control input {
-  display: block;
-}
-
-.control label {
-  font-weight: bold;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  color: #464646;
-  margin-bottom: 0.5rem;
-}
-
-.control input {
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
-  font: inherit;
-  padding: 0.35rem 0.35rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.control input:focus {
-  outline: none;
-  border-color: #4f005f;
-  background: #f6dbfc;
-}
-
-.control.invalid input {
-  border-color: red;
-  background: #fbdada;
-}
-
 .actions {
   text-align: center;
-}
-
-@media (min-width: 768px) {
-  .control {
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-  }
-
 }
