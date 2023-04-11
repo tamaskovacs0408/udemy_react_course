@@ -1,4 +1,4 @@
-import { useRef, forwardRef ,useImperativeHandle } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
 import classes from "./Input.module.css";
 
 const Input = forwardRef((props, ref) => {
@@ -10,9 +10,9 @@ const Input = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => {
     return {
-        focus: focus
-    }
-  })
+      focus: focus,
+    };
+  });
 
   return (
     <div
