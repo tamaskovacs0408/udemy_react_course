@@ -273,7 +273,7 @@ The `useEffect` hook can return a function after its first, function argument. T
     };
   }, [setFormIsValid, enteredEmail, enteredPassword]);
 
-``
+```
 
 ### useReducer hook
 
@@ -289,3 +289,92 @@ const [state, dispatchFunction] = useReducer(reducerFunction, initialState, init
 - The `intialState` and the `initialFunction` are ignored for now
 
 Because the explain of useReducer is a bit (not bit) chaotic, more of this can be read [here](https://github.com/tamaskovacs0408/web_tutorials/tree/master/usereducer_tutorial).
+
+### Context API - useContext hook
+
+The Context API is used for to replace passing states through components with props.
+
+Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that file we can manage all states and functions (also the useState and useEffects) which are used in the context API and we have to declare the initial states and functions (it just can be added as an empty function, but if it takes arguments, add them to it in here too!). To manage the whole context, we van create a component, where we add the `children` as props and have to pass the states and functions to the provider in an object as `value`.
+To reach this state(s), import this file in the `index.js` (because from here every component can reach the context) and wrap around the `<App />` with the `<contextName.Provider>{...}</contextName.Provider>`. 
+
+```js
+// ---------------- In the external context file: ----------------------
+
+import React, { useState, useEffect } from "react";
+
+const AuthContext = React.createContext({
+  isLoggedIn: false,
+  onLogout: () => {},
+  onLogin: (email, password) => {}
+});
+
+export const AuthContextProvider = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const loginHandler = (email, password) => {
+    // We should of course check email and password
+    // But it's just a dummy/ demo anyways
+    localStorage.setItem("isLoggedIn", "true");
+    setIsLoggedIn(true);
+  };
+
+  useEffect(() => {
+    const storedUserLogin = localStorage.getItem("isLoggedIn");
+
+    if (storedUserLogin === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const logoutHandler = () => {
+    // localStorage.setItem("isLoggedIn", "false");
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+  };
+
+  return <AuthContext.Provider value={{
+    isLoggedIn: isLoggedIn,
+    onLogin: loginHandler,
+    onLogout: logoutHandler
+  }}>
+    {props.children}
+    </AuthContext.Provider>;
+};
+
+export default AuthContext;
+
+```
+
+```js
+// --------------------- In index.js ------------------------ 
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+import "./index.css";
+import App from "./App";
+import { AuthContextProvider } from "./store/auth-context";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <AuthContextProvider>
+    <App />
+  </AuthContextProvider>
+);
+
+```
+
+To reach and use the context, import the context object (NOT THE PROVIDER) (Where the default states and functions added) and the `useContext` hook into the components, where we'd like to use them. Create a variable and pass the `useContext()` hook to it which gets the context as a parameter. Now, we van reach and use the context with the variable name pointing to the context object.
+
+```js
+const somethingCtx = useContext(sgContext);
+```
+
+Now, we can reach the context's state through this variable (`somethingCtx.sgState`).
+
+#### Context limitations:
+
+- If we have a `Button` component which onClick even trigger the specific function which is passed to it (e.g. it works as a login button in one component and a logout in another) we shouldn't use the context because the button will only handle that event. So in the actual Button component use the props, but context can be used when the function added to the button in a component where it used.
+
+- React Context is not optimized for high frequency (0.1s, 1s) changes, but for static values and propagate updates through subscriptions (e.g. authentication, authorization)
+
+- Shouldn't replace all props communications with props to context
