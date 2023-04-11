@@ -74,7 +74,33 @@ Because the explain of useReducer is a bit (not bit) chaotic, more of this can b
 
 The Context API is used for to replace passing states through components with props.
 
-Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that file we can declare the initial states. To reach this state(s), import this file in the `App.js` (because from here every component can reach the context) and wrap around the components with the `<contextName.Provider>{...}</contextName.Provider>`.
+Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that file we can declare the initial states. To reach this state(s), import this file in the `App.js` (because from here every component can reach the context) and wrap around the components with the `<contextName.Provider>{...}</contextName.Provider>`. In the `App.js` file, pass the current states and functions (not execute the function, just point to it) to the Provider with a `value` argument.
+
+```js
+//In the external context file:
+
+import React from "react";
+
+const AuthContext = React.createContext({
+    isLoggedIn: false
+
+});
+
+export default AuthContext;
+```
+
+```js
+//In App.js
+return (
+      <AuthContext.Provider value={{
+        isLoggedIn: isLoggedIn,
+        onLogout: logoutHandler
+    }}>
+       {...}
+      </AuthContext.Provider>
+  );
+
+```
 
 Secondly in that component where we'd like to use the context import the `useContext` hook and the created context(s) as well. Create a variable and pass the `useContext` hook to it which is gets the context as argument.
 
