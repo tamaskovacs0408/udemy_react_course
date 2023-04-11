@@ -74,35 +74,76 @@ Because the explain of useReducer is a bit (not bit) chaotic, more of this can b
 
 The Context API is used for to replace passing states through components with props.
 
-Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that file we can declare the initial states. To reach this state(s), import this file in the `App.js` (because from here every component can reach the context) and wrap around the components with the `<contextName.Provider>{...}</contextName.Provider>`. In the `App.js` file, pass the current states and functions (not execute the function, just point to it) to the Provider with a `value` argument.
+Create a `store`/`context` folder inside `src` and add a file for you context (multiple context can be added). In that file we can manage all states and functions (also the useState and useEffects) which are used in the context API and we have to declare the initial states and functions (it just can be added as an empty function, but if it takes arguments, add them to it in here too!). To manage the whole context, we van create a component, where we add the `children` as props and have to pass the states and functions to the provider in an object as `value`.
+To reach this state(s), import this file in the `index.js` (because from here every component can reach the context) and wrap around the `<App />` with the `<contextName.Provider>{...}</contextName.Provider>`. 
 
 ```js
-//In the external context file:
+// ---------------- In the external context file: ----------------------
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const AuthContext = React.createContext({
-    isLoggedIn: false
-
+  isLoggedIn: false,
+  onLogout: () => {},
+  onLogin: (email, password) => {}
 });
 
+export const AuthContextProvider = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const loginHandler = (email, password) => {
+    // We should of course check email and password
+    // But it's just a dummy/ demo anyways
+    localStorage.setItem("isLoggedIn", "true");
+    setIsLoggedIn(true);
+  };
+
+  useEffect(() => {
+    const storedUserLogin = localStorage.getItem("isLoggedIn");
+
+    if (storedUserLogin === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const logoutHandler = () => {
+    // localStorage.setItem("isLoggedIn", "false");
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+  };
+
+  return <AuthContext.Provider value={{
+    isLoggedIn: isLoggedIn,
+    onLogin: loginHandler,
+    onLogout: logoutHandler
+  }}>
+    {props.children}
+    </AuthContext.Provider>;
+};
+
 export default AuthContext;
+
 ```
 
 ```js
-//In App.js
-return (
-      <AuthContext.Provider value={{
-        isLoggedIn: isLoggedIn,
-        onLogout: logoutHandler
-    }}>
-       {...}
-      </AuthContext.Provider>
-  );
+// --------------------- In index.js ------------------------ 
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+import "./index.css";
+import App from "./App";
+import { AuthContextProvider } from "./store/auth-context";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <AuthContextProvider>
+    <App />
+  </AuthContextProvider>
+);
 
 ```
 
-Secondly in that component where we'd like to use the context import the `useContext` hook and the created context(s) as well. Create a variable and pass the `useContext` hook to it which is gets the context as argument.
+To reach and use the context, import the context object (NOT THE PROVIDER) (Where the default states and functions added) and the `useContext` hook into the components, where we'd like to use them. Create a variable and pass the `useContext()` hook to it which gets the context as a parameter. Now, we van reach and use the context with the variable name pointing to the context object.
 
 ```js
 const somethingCtx = useContext(sgContext);
