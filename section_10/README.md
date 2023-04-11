@@ -150,3 +150,11 @@ const somethingCtx = useContext(sgContext);
 ```
 
 Now, we can reach the context's state through this variable (`somethingCtx.sgState`).
+
+#### Context limitations:
+
+- If we have a `Button` component which onClick even trigger the specific function which is passed to it (e.g. it works as a login button in one component and a logout in another) we shouldn't use the context because the button will only handle that event. So in the actual Button component use the props, but context can be used when the function added to the button in a component where it used.
+
+- React Context is not optimized for high frequency (0.1s, 1s) changes, but for static values and propagate updates through subscriptions (e.g. authentication, authorization)
+
+- Shouldn't replace all props communications with props to context
