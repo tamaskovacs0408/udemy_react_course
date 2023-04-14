@@ -23,3 +23,38 @@ const someFunction = useCallback(() => {...}, [dependencies])
 ```
 
 Now the function is stored by the useCallback and when the component re-runs useCallback look for the stored function and re-use it.
+
+### useMemo()
+
+The `useMemo()` hook in React is used to memoize (cache) a calculation, and only recalculate it if the input changes. The input can be one or more values, and if any of them change, we recalculate the output.
+
+One of the advantages of using the `useMemo()` hook is that you can reduce the amount of redundant calculations and improve the performance of your application. If a component is periodically re-rendered without the required input values having changed, using `useMemo()` can help avoid these unnecessary renders.
+
+The downside is that if not used properly, you can keep objects in your application's memory that are no longer in use, which can cause memory leaks. However, this usually only happens if we use the hook incorrectly and memoize objects that are not needed.
+
+`useMemo` takes a function as first argument, which returns what we'd like to store (e.g. a sorted array). The second argument is the dependencies (in an array) to tell, that only rebuild this function if the dependencies change.
+
+For example, if a component has a very expensive computation that needs to be recomputed every render, using `useMemo()` can help reduce computation time and frequent re-renderings. The code below is an example of this:
+
+```js
+import { useMemo } from 'react';
+
+function ExampleComponent({ data }) {
+  const sortedData = useMemo(() => {
+    // Costly calculation by processing the data
+    return data.sort((a, b) => a - b);
+  }, [data]);
+
+  return (
+    <div>
+      <ul>
+        {sortedData.map(data => (
+            <li key={data}>{data}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+In this example, the `useMemo()` hook memoizes the result of the `sortedData` function, and only recalculates if the data prop changes. This helps reduce computation time and unnecessary re-renderings.
