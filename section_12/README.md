@@ -37,6 +37,18 @@ The downside is that if not used properly, you can keep objects in your applicat
 For example, if a component has a very expensive computation that needs to be recomputed every render, using `useMemo()` can help reduce computation time and frequent re-renderings. The code below is an example of this:
 
 ```js
+import {useMemo} from 'react';
+import ExampleComponent from "./ExampleComponent";
+
+function App() {
+  return(
+    <div className="app">
+      <ExampleComponent data={useMemo(() => [2, 4, 6, 1, 8, 3]), []}/>
+    </div>
+  )
+}
+
+...
 import { useMemo } from 'react';
 
 function ExampleComponent({ data }) {
@@ -58,3 +70,5 @@ function ExampleComponent({ data }) {
 ```
 
 In this example, the `useMemo()` hook memoizes the result of the `sortedData` function, and only recalculates if the data prop changes. This helps reduce computation time and unnecessary re-renderings.
+
+Also, because every re-render a new array created (even it's items are the same) we have to add a `useMemo()` hook where the data is passed as props to the component. As dependencies add an empty array.
