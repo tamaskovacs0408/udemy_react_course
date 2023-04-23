@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import classes from './Movie.module.css';
+import classes from "./Movie.module.css";
 
 const Movie = (props) => {
   let releaseDate = props.releaseDate.replace(/-/g, ".");
+
+  releaseDate = releaseDate.concat(".");
 
   return (
     <li className={classes.movie}>

@@ -27,3 +27,20 @@ button:active {
   background-color: #460897;
   border-color: #460897;
 }
+
+.icon {
+  animation-name: tieRotation;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+
+@keyframes tieRotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -5,11 +5,14 @@ import "./App.css";
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleFetch = () => {
-    fetch("https://swapi.dev/api/films")
-      .then((response) => response.json())
-      .then((data) => setMovies(data.results));
+  const handleFetch = async () => {
+    setIsLoading(prevState => !prevState);
+    const response = await fetch("https://swapi.dev/api/films");
+    const data = await response.json();
+    setMovies(data.results);
+    setIsLoading((prevState) => !prevState);
   };
 
   return (
@@ -18,7 +21,16 @@ function App() {
         <button onClick={handleFetch}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={movies} />
+        {isLoading ? (
+          <div className="icon">
+            <img
+              src="https://img.icons8.com/color/48/null/tie-fighter.png"
+              alt="tie fighter icon"
+            />
+          </div>
+        ) : (
+          <MoviesList movies={movies} />
+        )}
       </section>
     </>
   );
