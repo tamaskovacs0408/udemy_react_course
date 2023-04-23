@@ -20,14 +20,14 @@ function App() {
   ];
 
   return (
-    <React.Fragment>
+    <>
       <section>
         <button>Fetch Movies</button>
       </section>
       <section>
         <MoviesList movies={dummyMovies} />
       </section>
-    </React.Fragment>
+    </>
   );
 }
 
