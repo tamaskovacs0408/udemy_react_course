@@ -1,11 +1,23 @@
 section {
   margin: 1rem auto;
   width: 90%;
-  max-width: 40rem;
+  /* max-width: 40rem; */
   text-align: center;
   background-color: white;
   padding: 2rem;
   border-radius: 12px;
+}
+
+section:nth-child(1) {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} 
+
+section:nth-child(1) img {
+  width: 80%;
 }
 
 button {

@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
+import SwLogo from "./assets/sw.png";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -10,7 +11,7 @@ function App() {
   const [isVisible, setIsVisible] = useState(false);
   const movieRef = useRef(null);
 
-  const handleFetch = async () => {
+  const handleFetch = useCallback(async () => {
     setIsLoading((prevState) => !prevState);
     setError(null);
     try {
@@ -24,7 +25,7 @@ function App() {
       setError(error.message);
     }
     setIsLoading((prevState) => !prevState);
-  };
+  }, []) ;
 
   const scrollCallBack = (entries) => {
     const [entry] = entries;
@@ -38,13 +39,22 @@ function App() {
   };
 
   useEffect(() => {
+    handleFetch()
+  }, [handleFetch])
+
+  useEffect(() => {
     const observer = new IntersectionObserver(scrollCallBack, options);
     if (movieRef.current) observer.observe(movieRef.current);
+
+    return () => {
+      if (movieRef.current) observer.unobserve(movieRef.current);
+    }
   }, [movieRef, options]);
 
   return (
     <>
       <section>
+        <img src={SwLogo} alt="Star Wars logo" />
         <button onClick={handleFetch}>Fetch Movies</button>
       </section>
       <section>
