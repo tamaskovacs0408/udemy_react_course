@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -7,6 +7,8 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const movieRef = useRef(null);
 
   const handleFetch = async () => {
     setIsLoading((prevState) => !prevState);
@@ -18,12 +20,27 @@ function App() {
       }
       const data = await response.json();
       setMovies(data.results);
-      
     } catch (error) {
       setError(error.message);
     }
     setIsLoading((prevState) => !prevState);
   };
+
+  const scrollCallBack = (entries) => {
+    const [entry] = entries;
+    setIsVisible(entry.isIntersecting);
+  };
+
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    treshold: 0.3,
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(scrollCallBack, options);
+    if (movieRef.current) observer.observe(movieRef.current);
+  }, [movieRef, options]);
 
   return (
     <>
@@ -39,7 +56,7 @@ function App() {
             />
           </div>
         ) : (
-          <MoviesList movies={movies} />
+          <MoviesList movies={movies} movieRef={movieRef} visible={isVisible} />
         )}
         {!isLoading && error && <p>{error}</p>}
       </section>

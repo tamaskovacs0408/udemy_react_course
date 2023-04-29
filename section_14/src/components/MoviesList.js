@@ -12,6 +12,8 @@ const MovieList = (props) => {
           title={movie.title}
           releaseDate={movie.release_date}
           openingText={movie.opening_crawl}
+          movieRef={props.movieRef}
+          visible={props.visible}
         />
       ))}
     </ul>

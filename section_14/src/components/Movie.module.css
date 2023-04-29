@@ -8,6 +8,17 @@
   color: white;
 }
 
+.hidden {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all ease-in 1.2s;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .movie h2 {
   font-size: 2rem;
   color: #f7e702;
@@ -21,4 +32,24 @@
 
 .movie p {
   text-align: justify;
+}
+
+.movie:nth-child(2) {
+  transition-delay: 200ms;
+}
+
+.movie:nth-child(3) {
+  transition-delay: 400ms;
+}
+
+.movie:nth-child(4) {
+  transition-delay: 600ms;
+}
+
+.movie:nth-child(5) {
+  transition-delay: 800ms;
+}
+
+.movie:nth-child(6) {
+  transition-delay: 1000ms;
 }
