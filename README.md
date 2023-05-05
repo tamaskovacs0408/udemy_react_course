@@ -454,3 +454,52 @@ function ExampleComponent({ data }) {
 In this example, the `useMemo()` hook memoizes the result of the `sortedData` function, and only recalculates if the data prop changes. This helps reduce computation time and unnecessary re-renderings.
 
 Also, because every re-render a new array created (even it's items are the same) we have to add a `useMemo()` hook where the data is passed as props to the component. As dependencies add an empty array.
+
+
+### WAIT FOR DOM ELEMENT CUSTOM FUNCTION
+
+```js
+
+// Promise based observer for waiting DOM element
+function waitForDOMElement(selector) {
+    // eslint-disable-next-line no-undef
+    return new Promise((resolve) => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver(() => {
+            if (document.querySelector(selector)) {
+                resolve(document.querySelector(selector));
+                observer.disconnect();
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+
+// adding device based class to input
+waitForDOMElement('input#header-search-input').then((elm) => {
+    let input = elm;
+
+    let screenWidth = window.innerWidth;
+    let device = screenWidth < 768 ? 'mobile' : screenWidth < 1024 ? 'tablet' : 'desktop';
+    let additionalAcClass = 'pfbx-autocomplete-' + device;
+
+    input.classList.add(additionalAcClass);
+});
+
+
+// ORRRRRR
+
+ waitForDOMElement('KERESENDŐ ELEM CLASS/ID-ja').then((element) => {
+        let btn = element; // Ki lehet szervezni változóba az elemet
+        const input = document.querySelector(".prefixbox-search-input-desktop");
+        btn.textContent = `zobacz wszystkie "${input.value}"`;
+    });
+
+```
