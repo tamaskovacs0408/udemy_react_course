@@ -488,9 +488,9 @@ waitForDOMElement('input#header-search-input').then((elm) => {
 
     let screenWidth = window.innerWidth;
     let device = screenWidth < 768 ? 'mobile' : screenWidth < 1024 ? 'tablet' : 'desktop';
-    let additionalAcClass = 'pfbx-autocomplete-' + device;
+    let additionalClass = 'additionalClass-' + device;
 
-    input.classList.add(additionalAcClass);
+    input.classList.add(additionalClass);
 });
 
 
@@ -498,8 +498,8 @@ waitForDOMElement('input#header-search-input').then((elm) => {
 
  waitForDOMElement('KERESENDŐ ELEM CLASS/ID-ja').then((element) => {
         let btn = element; // Ki lehet szervezni változóba az elemet
-        const input = document.querySelector(".prefixbox-search-input-desktop");
-        btn.textContent = `zobacz wszystkie "${input.value}"`;
+        const input = document.querySelector(".search-input-desktop");
+        btn.textContent = `something "${input.value}"`;
     });
 
 ```
