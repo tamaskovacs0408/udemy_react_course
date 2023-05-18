@@ -1,22 +1,25 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import useInput from "../hooks/useInput";
 
 const SimpleInput = (props) => {
-  const nameInputRef = useRef();
-  const emailInputRef = useRef();
-  const [enteredName, setEnteredName] = useState("");
+  const {
+    value: enteredName,
+    hasError: nameInputHasError,
+    valueChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+  } = useInput((value) => value.trim() !== "");
+  
   const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
+  
   const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
-  const enteredNameIsValid = enteredName.trim() !== "";
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
   const enteredEmailIsValid = enteredEmail.includes("@");
   const emailInputIsInvalid = !enteredEmailIsValid && enteredEmailTouched;
 
   let formIsValid = false;
 
-  if (enteredNameIsValid && enteredEmailIsValid) {
+  if (nameInputHasError && enteredEmailIsValid) {
     formIsValid = true;
   }
 
@@ -44,7 +47,6 @@ const SimpleInput = (props) => {
       return;
     }
 
-    console.log(nameInputRef.current.value);
     setEnteredName("");
     setEnteredEmail("");
     setEnteredNameTouched(false);
@@ -67,7 +69,6 @@ const SimpleInput = (props) => {
           id="name"
           onChange={handleEnteredName}
           onBlur={nameInputBlurHandler}
-          ref={nameInputRef}
           value={enteredName}
         />
         {nameInputIsInvalid && (
@@ -81,7 +82,6 @@ const SimpleInput = (props) => {
           id="email"
           onChange={handleEnteredEmail}
           onBlur={emailInputBlurHandler}
-          ref={emailInputRef}
           value={enteredEmail}
         />
         {emailInputIsInvalid && (
