@@ -28,6 +28,28 @@ const BasicForm = (props) => {
     reset: resetEmailInput,
   } = useInput((value) => value.includes("@"));
 
+  let formIsValid = false;
+
+  if (
+    enteredFirstNameIsValid &&
+    enteredLastNameIsValid &&
+    enteredEmailIsValid
+  ) {
+    formIsValid = true;
+  }
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    if (!enteredFirstNameIsValid || !enteredLastNameIsValid) {
+      return;
+    }
+
+    resetFirstNameInput();
+    resetLastNameInput();
+    resetEmailInput();
+  }
+
   return (
     <form>
       <div className="control-group">
