@@ -48,7 +48,19 @@ const BasicForm = (props) => {
     resetFirstNameInput();
     resetLastNameInput();
     resetEmailInput();
-  }
+  };
+
+  const firstNameInputClasses = firstNameInputHasError
+    ? "form-control invalid"
+    : "form-control";
+
+  const lastNameInputClasses = lastNameInputHasError
+    ? "form-control invalid"
+    : "form-control";
+
+  const emailInputClasses = emailInputHasError
+    ? "form-control invalid"
+    : "form-control";
 
   return (
     <form>
