@@ -3,7 +3,7 @@ import classes from "./MealItem.module.css";
 import MealItemForm from "./MealItemForm";
 import CartContext from "../../../store/cart-context";
 
-const MealItem = ({id, name, image, description, price}) => {
+const MealItem = ({ id, name, image, description, price }) => {
   const burgerPrice = `$${price.toFixed(2)}`;
   const cartCtx = useContext(CartContext);
 
@@ -12,25 +12,25 @@ const MealItem = ({id, name, image, description, price}) => {
       id: id,
       name: name,
       amount: amount,
-      price: price
-    })
-  }
+      price: price,
+    });
+  };
 
   return (
     <li className={classes.meal}>
       <div>
+      <img src={image} alt={name} />
+      </div>
+      <div>
         <h3>{name}</h3>
-        {/* <div>
-          <img src={image} alt={name} />
-        </div> */}
         <div className={classes.description}>{description}</div>
         <div className={classes.price}>{burgerPrice}</div>
       </div>
       <div>
-        <MealItemForm id={id} addToCart={handleAddToCart}/>
+        <MealItemForm id={id} addToCart={handleAddToCart} />
       </div>
     </li>
   );
-}
+};
 
-export default MealItem
+export default MealItem;
