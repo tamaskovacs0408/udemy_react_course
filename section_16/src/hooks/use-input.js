@@ -12,14 +12,21 @@ const useInput = (validateValue) => {
   };
 
   const inputBlurHandler = () => {
-    isTouched(true);
+    setIsTouched(true);
   };
+
+  const reset = () => {
+    setEnteredValue("");
+    setIsTouched(false);
+  }
 
   return {
     value: enteredValue,
+    isValid: valueIsValid,
     hasError,
     valueChangeHandler,
-    inputBlurHandler
+    inputBlurHandler,
+    reset
   };
 };
 
