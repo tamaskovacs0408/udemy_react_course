@@ -4,6 +4,7 @@ import useInput from "../hooks/useInput";
 const SimpleInput = (props) => {
   const {
     value: enteredName,
+    isValid: enteredNameIsValid,
     hasError: nameInputHasError,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
@@ -19,7 +20,8 @@ const SimpleInput = (props) => {
 
   let formIsValid = false;
 
-  if (nameInputHasError && enteredEmailIsValid) {
+  if (enteredNameIsValid
+     && enteredEmailIsValid) {
     formIsValid = true;
   }
 
