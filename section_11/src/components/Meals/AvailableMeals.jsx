@@ -6,12 +6,18 @@ import classes from "./AvailableMeals.module.css";
 function AvailableMeals() {
   const [burgers, setBurgers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [httpError, setHttpError] = useState();
 
   useEffect(() => {
     const fetchBurgers = async () => {
       const response = await fetch(
         "https://burgersdata-default-rtdb.europe-west1.firebasedatabase.app/burgers.json"
       );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
       const responseData = await response.json();
 
       const loadedMeals = [];
@@ -29,7 +35,10 @@ function AvailableMeals() {
       setLoading(false);
     };
 
-    fetchBurgers();
+    fetchBurgers().catch((error) => {
+      setLoading(false);
+      setHttpError(error.message);
+    });
   }, []);
 
   if (loading) {
@@ -37,7 +46,11 @@ function AvailableMeals() {
       <section className={classes.mealsLoading}>
         <p>Loading...</p>
       </section>
-    )
+    );
+  }
+
+  if (httpError) {
+    return <section className={classes.mealsError}>{httpError}</section>;
   }
 
   return (
