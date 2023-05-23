@@ -18,11 +18,12 @@
   height: 150px;
   object-fit: cover;
   margin: 10px auto;
+  border-radius: 50%;
 }
 
 .description {
   font-style: italic;
-  width: 60%;
+  width: 100%;
 }
 
 .price {
