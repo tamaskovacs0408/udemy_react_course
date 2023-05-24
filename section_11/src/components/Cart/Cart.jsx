@@ -25,6 +25,19 @@ const Cart = ({ closeCart }) => {
     setIsCheckout(true);
   };
 
+  const handleSubmitOrder = (userData) => {
+    fetch(
+      "https://burgersdata-default-rtdb.europe-west1.firebasedatabase.app/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: userData,
+          orderedItems: cartCtx.items,
+        }),
+      }
+    );
+  };
+
   return (
     <Modal closeCart={closeCart}>
       <div className={classes["cart-items"]}>
@@ -47,7 +60,9 @@ const Cart = ({ closeCart }) => {
         <span>Total amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout closeCart={closeCart}/>}
+      {isCheckout && (
+        <Checkout handleSubmitOrder={handleSubmitOrder} closeCart={closeCart} />
+      )}
       {!isCheckout && (
         <div className={classes.actions}>
           <button className={classes["button--alt"]} onClick={closeCart}>

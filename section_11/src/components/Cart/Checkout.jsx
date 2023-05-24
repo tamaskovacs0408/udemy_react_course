@@ -4,7 +4,7 @@ import classes from "./Checkout.module.scss";
 const isEmpty = (value) => value.trim() === "";
 const isFiveChars = (value) => value.trim().length === 5;
 
-const Checkout = ({ closeCart }) => {
+const Checkout = ({ closeCart, handleSubmitOrder }) => {
   const [formInputsValidity, setFormInputsValidity] = useState({
     name: true,
     street: true,
@@ -46,6 +46,13 @@ const Checkout = ({ closeCart }) => {
     if (!formIsValid) {
       return;
     }
+
+    handleSubmitOrder({
+      name: enteredName,
+      street: enteredStreet,
+      city: enteredCity,
+      postalCode: enteredPostal
+    });
   };
 
   return (
