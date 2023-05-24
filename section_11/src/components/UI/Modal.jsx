@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import classes from "./Modal.module.css";
+import classes from "./Modal.module.scss";
 
 const Backdrop = ({closeCart}) => {
   return (
