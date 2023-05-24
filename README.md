@@ -129,6 +129,9 @@ We can also use dynamical rendering with css modules too.
 
 Media queries works as like as in common css files.
 
+#### SCSS Modules
+
+Have to install sass to the project with `npm i sass`. The file names should be `*.module.scss`. After that, everything works like as in the CSS modules, but with the SASS/SCSS syntax. We don't have to start the *Watch Sass*!
 
 ### Accept incoming css classes from another component
 
