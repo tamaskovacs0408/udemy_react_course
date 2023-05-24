@@ -1,4 +1,4 @@
-import classes from './CartItem.module.css';
+import classes from './CartItem.module.scss';
 
 const CartItem = ({name, price, amount, onAdd, onRemove}) => {
   const fixedPrice = `$${price.toFixed(2)}`;
