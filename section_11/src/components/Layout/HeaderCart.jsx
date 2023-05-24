@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import CartContext from "../../store/cart-context";
 import CartIcon from "../Cart/CartIcon";
-import classes from "./HeaderCart.module.css";
+import classes from "./HeaderCart.module.scss";
 
 const HeaderCart = ({ showCart }) => {
   const [btnIsHighLighted, setBtnIsHighLighted] = useState(false);

@@ -10,11 +10,11 @@
   align-items: center;
   border-radius: 25px;
   font-weight: bold;
-}
 
-.button:hover,
-.button:active {
-  background-color: #171a1c;
+  &:hover,
+  &:active {
+    background-color: #171a1c;
+  }
 }
 
 .icon {
@@ -30,11 +30,11 @@
   border-radius: 25px;
   margin-left: 1rem;
   font-weight: bold;
-}
 
-.button:hover .badge,
-.button:active .badge {
-  background-color: #92320c;
+  &:hover,
+  &:active {
+    background-color: #92320c;
+  }
 }
 
 .bump {
