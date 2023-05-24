@@ -49,7 +49,7 @@ const Checkout = ({ closeCart }) => {
   };
 
   return (
-    <form onSubmit={handleConfirm}>
+    <form className={classes.form} onSubmit={handleConfirm}>
       <div
         className={`${classes.control} ${
           formInputsValidity.name ? "" : classes.invalid
