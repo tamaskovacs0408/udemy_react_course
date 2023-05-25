@@ -25,7 +25,7 @@ function App() {
 
 ```
 
-## Setup #2
+### Setup #2
 
 Alternative way to routes:
 
@@ -56,4 +56,18 @@ function App() {
         </Routes>
     )
 }
+```
+
+## Navigating
+
+To navigate between pages, use the React Router's `Link`.
+It has a `to=""` attribute where we can tell it where to navigate.
+
+```js
+import { Link } from "react-router-dom";
+...
+
+<>
+    <p>Go back to <Link to="/">Homepage</Link></p>
+</>
 ```
