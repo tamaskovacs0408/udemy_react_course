@@ -11,7 +11,7 @@ function AvailableMeals() {
   useEffect(() => {
     const fetchBurgers = async () => {
       const response = await fetch(
-        "https://burgersdata-default-rtdb.europe-west1.firebasedatabase.app/burgers.json"
+        `${process.env.REACT_APP_FIREBASE_URL}/burgers.json`
       );
 
       if (!response.ok) {

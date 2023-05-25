@@ -27,7 +27,7 @@ const Cart = ({ closeCart }) => {
 
   const handleSubmitOrder = (userData) => {
     fetch(
-      "https://burgersdata-default-rtdb.europe-west1.firebasedatabase.app/orders.json",
+      `${process.env.REACT_APP_FIREBASE_URL}/orders.json`,
       {
         method: "POST",
         body: JSON.stringify({
