@@ -13,7 +13,7 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('https://react-http-f2e3a-default-rtdb.europe-west1.firebasedatabase.app/movies.json');
+      const response = await fetch(`${process.env.REACT_APP_FIREBASE_URL}/movies.json`);
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
