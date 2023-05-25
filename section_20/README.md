@@ -24,3 +24,36 @@ function App() {
 }
 
 ```
+
+## Setup #2
+
+Alternative way to routes:
+
+In the `index.js` file import `BrowserRouter`, and wrap it around the `App` component.
+
+```js
+import { BrowserRouter } from "react-router-dom";
+....
+
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+)
+```
+
+In the `app.js` file we can set up the routes. Import `Routes` and `Route` from "react-router-dom". Wrap `Routes` around the `Route`(s). We can nest `Route` into each oder (to make subroutes), but `Routes` have to be around the `Route`s.
+
+```js
+import {Routes, Route} from "react-router-dom";
+...
+
+function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<HomePage />}>
+            <Route path="/products" element={<ProductPage />}>
+        </Routes>
+    )
+}
+```
