@@ -7,6 +7,8 @@ import Checkout from "./Checkout";
 
 const Cart = ({ closeCart }) => {
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
   const cartCtx = useContext(CartContext);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -25,21 +27,21 @@ const Cart = ({ closeCart }) => {
     setIsCheckout(true);
   };
 
-  const handleSubmitOrder = (userData) => {
-    fetch(
-      `${process.env.REACT_APP_FIREBASE_URL}/orders.json`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          user: userData,
-          orderedItems: cartCtx.items,
-        }),
-      }
-    );
+  const handleSubmitOrder = async (userData) => {
+    setIsSubmitting(true);
+    await fetch(`${process.env.REACT_APP_FIREBASE_URL}/orders.json`, {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: cartCtx.items,
+      }),
+    });
+    setIsSubmitting(false);
+    setDidSubmit(true);
   };
 
-  return (
-    <Modal closeCart={closeCart}>
+  const cartModalContent = (
+    <>
       <div className={classes["cart-items"]}>
         <ul>
           {cartCtx.items.map((item) => {
@@ -75,6 +77,18 @@ const Cart = ({ closeCart }) => {
           ) : null}
         </div>
       )}
+    </>
+  );
+
+  const isSubmittingModalContent = <p>Sending order...</p>;
+
+  const didSubmitModalContent = <p>Order sent successfully!</p>;
+
+  return (
+    <Modal closeCart={closeCart}>
+      {!isSubmitting && !didSubmit && cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmit && didSubmitModalContent}
     </Modal>
   );
 };
