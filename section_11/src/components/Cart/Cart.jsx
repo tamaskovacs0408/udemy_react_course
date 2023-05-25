@@ -38,6 +38,7 @@ const Cart = ({ closeCart }) => {
     });
     setIsSubmitting(false);
     setDidSubmit(true);
+    cartCtx.clearCart();
   };
 
   const cartModalContent = (
