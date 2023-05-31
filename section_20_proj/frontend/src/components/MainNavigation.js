@@ -10,6 +10,7 @@ function MainNavigation() {
           <li>
             <NavLink
               to="/"
+              end
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
