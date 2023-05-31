@@ -60,6 +60,8 @@ function App() {
 
 ## Navigating
 
+### Link
+
 To navigate between pages, use the React Router's `Link`.
 It has a `to=""` attribute where we can tell it where to navigate.
 
@@ -71,6 +73,66 @@ import { Link } from "react-router-dom";
     <p>Go back to <Link to="/">Homepage</Link></p>
 </>
 ```
+
+### NavLink
+
+The other way to navigate between pages is the `NavLink` component.
+It's a better way, when we using a navigation bar, because we can set active style for the active links. It's `className` works like a normal className, but you can also pass it a function to customize the classNames applied based on the active and pending state of the link. The `isActive` and the `isPending` are coming from the `React Router Dom`.
+
+```js
+<NavLink
+  to="/messages"
+  className={({ isActive, isPending }) =>
+    isPending ? "pending" : isActive ? "active" : ""
+  }
+>
+  Messages
+</NavLink>
+```
+#### end
+
+The `end` prop changes the matching logic for the active and pending states to only match to the "end" of the NavLink's to path. If the URL is longer than to, it will no longer be considered active.
+
+Without the end prop, this link is always active because every URL matches /.
+
+```js
+<NavLink to="/" end>
+  Home
+</NavLink>
+```
+
+Now this link will only be active at "/".
+
+### useNavigate
+
+**It's usually better to use `redirect` in loaders and `actions` than this hook!**
+
+The useNavigate hook returns a function that lets you navigate programmatically, for example in an effect:
+
+```js
+
+import { useNavigate } from "react-router-dom";
+
+function useLogoutTimer() {
+  const userIsInactive = useFakeInactiveUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userIsInactive) {
+      fake.logout();
+      navigate("/session-timed-out");
+    }
+  }, [userIsInactive]);
+}
+
+```
+
+The navigate function has two signatures:
+
+Either pass a `To` value (same type as `<Link to>`) with an optional second `{ replace, state }` arg or
+Pass the delta you want to go in the history stack. For example, `navigate(-1)` is equivalent to hitting the back button.
+If using `replace: true`, the navigation will replace the current entry in the history stack instead of adding a new one.
+
 
 ## Layout
 
