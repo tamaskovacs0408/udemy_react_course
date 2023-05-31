@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import classes from './EventForm.module.css';
+import classes from './EventForm.module.scss';
 
 function EventForm({ method, event }) {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import classes from './EventItem.module.css';
+import classes from './EventItem.module.scss';
 
 function EventItem({ event }) {
   function startDeleteHandler() {
