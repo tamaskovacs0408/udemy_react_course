@@ -4,7 +4,11 @@ const ProductsPage = () => {
   return (
     <>
         <h1>Products</h1>
-        <Link to="/">Home Page</Link>
+        <ul>
+          <li>Product 1</li>
+          <li>Product 2</li>
+          <li>Product 3</li>
+        </ul>
     </>
   )
 }
