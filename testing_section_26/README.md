@@ -1,6 +1,8 @@
 # React testing
 
+`npm i jest`
 
+`getByRole()` [roles](https://www.w3.org/TR/html-aria/#docconformance) 
 
 
 ## userEvent vs fireEvent
