@@ -1,6 +1,7 @@
 # React testing
 
 `npm i jest`
+`npm i react-hooks-testing-library`
 
 `getByRole()` [roles](https://www.w3.org/TR/html-aria/#docconformance) 
 
