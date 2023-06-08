@@ -31,6 +31,8 @@ describe('Testing Greeting component', () => {
 
 A renderelést álatalában a `screen.getByText()` és a `screen.getAllByText()`-el tudjuk ellenőrizni. Ezek után vagy azt ellenőrizzük, hogy az adott elem/adat benne van-e a tesztelő környezetben a `toBeInTheDocument()`-el, vagy azt, hogy tesztelt adattal/szöveggel megegyező elemek száma nagyobb-e, mint 0. Ez a teszt azt vizsgálja, hogy van-e olyan elem, amelynek a szövege megegyezik a keresett szöveggel, és ezt a feltételt kifejezésben rögzíti. Tehát ha legalább egy ilyen elemet talál, amelynek a szövege megegyezik a valami-vel, akkor a teszt sikeres lesz.
 
+Az alábbi példában a button click tesztelés résznél az adott `state` feltételes renderelését teszteljük.
+
 ```js
 
 describe("Testing Greeting component", () => {
@@ -91,3 +93,65 @@ A `fireEvent` a tesztlés alapvető eszköze, amely közvetlenül meghívja az e
 Ezzel szemben a `userEvent` könyvtár a felhasználói eseményeket próbálja lehető legvalósághűbben szimulálni. Ez azt jelenti, hogy a `userEvent` metódusok nem csak egyszerűen meghívják az eseménykezelőket, hanem szimulálják a teljes felhasználói interakciót. Például a `userEvent.click` nem csak meghívja a `click` eseménykezelőt, hanem szimulálja a teljes kattintási folyamatot, beleértve a `mousedown`, `mouseup` és `click` eseményeket is, pont úgy ahogy egy valódi felhasználói kattintás történne.
 
 Összefoglalva, a `fireEvent` közvetlenül meghívja az eseménykezelőket, míg a `userEvent` a felhasználói eseményeket szimulálja. A `userEvent` gyakran realisztikusabb teszteket biztosít, mert több a felhasználói interakció részleteit szimulálja.
+
+### Testing image url
+
+Az alábbi tesztesetben azt vizsgáljuk, hogy a komponens helyesen rendereli-e a megadott mock objektumhoz tartozó adatokat, és hogy az img elemnek megfelelően beállítódik-e a src attribútuma.
+
+```js
+
+ test('Image src attribute with url', () => {
+        render(<Component data={data} />);
+
+        expect(screen.getByRole('img')).toHaveAttribute('src', data.imageUrl);
+    });
+```
+
+### Testing rendering icon
+
+Az alábbi tesztesetben azt vizsgáljuk, hogy az ikon megfelelően renderelődik-e ki.
+
+```js
+
+test('Rendering intel icon', () => {
+        render(<Component data={data} />);
+
+        const someIcon = document.querySelector('.label-some-icon');
+        expect(someIcon).toBeInTheDocument();
+        expect(someIcon).toHaveStyle(`background-image: url(${data.label_some_icon})`);
+    });
+
+```
+
+### Testing HTTP requests
+
+HTTP request-ek tesztelésénél használjunk mock-ot a http végpontok helyett.
+Cseréld le a komponens http kérését (fetch) egy dummy fetch funkcióra, amely csak egy id-t és címet fogad el.
+Abban az esetben, amikor adatokat kérünk le egy végpontról, a `findAllByRol`e-t kell használnunk, mert ez egy `Promise`-t ad vissza, amit `async/await`-tel kell kezelnünk. A `findAllByRole` több argumentumot is fogadhat, a harmadik argumentum pedig a `timeOut`, ami deafult 1000ms.
+
+A mock-olás nem csak a HTTP kérések tesztelését teszi lehetővé, de segíti a függőségek, szolgáltatások, vagy bármely más kód rész izolált tesztelését is, amelyek általában külső rendszerektől vagy komplex műveletektől függnek. Ezáltal a tesztek egyszerűbbé, gyorsabbá és megbízhatóbbá válnak.
+
+```js
+
+describe('Testing Async component', () => {
+    test('renders posts if request succeeds', async () => {
+       window.fetch = jest.fn();
+       window.fetch.mockResolvedValueOnce({
+        json: async () => [{id: 'p1', title: 'First post'}]
+       });
+        render(<Async />);
+
+        const listElement = await screen.findAllByRole('listitem');   
+        expect(listElement).not.toHaveLength(0);
+    })
+})
+
+```
+
+A `window.fetch = jest.fn()` kifejezés a globális fetch metódust mockolja a Jest keretrendszer `fn()` metódusával. Ez egy úgynevezett "mock function", ami lehetővé teszi, hogy a tesztkörnyezetben ellenőrizzük a fetch hívásokat.
+
+A `window.fetch.mockResolvedValueOnce({...})` metódussal beállítja, hogy a fetch metódus milyen értéket adjon vissza, amikor a teszt során meghívják. Itt a fetch metódus egy `Promise` objektumot ad vissza, ami sikeresen lefut, és egy objektumot ad vissza, aminek a json metódusa egy másik `Promis`e-t ad vissza, ami egy tömböt ad vissza, ami tartalmazza a lekért bejegyzéseket.
+
+A `const listElement = await screen.findAllByRole('listitem')` sorban várakozik arra, hogy az összes, 'listitem' szerepkörrel rendelkező elem megjelenjen a képernyőn. Ez tipikusan arra utal, hogy a komponens sikeresen lekérte és megjelenítette a bejegyzéseket.
+
+Végül az `expect(listElement).not.toHaveLength(0)` kifejezéssel ellenőrzi, hogy a listElement tömbnek van-e eleme. Ha nincs, akkor a teszt sikertelen, mert azt várjuk, hogy legalább egy bejegyzés megjelenjen.
