@@ -113,7 +113,7 @@ Az alábbi tesztesetben azt vizsgáljuk, hogy az ikon megfelelően renderelődik
 
 ```js
 
-test('Rendering intel icon', () => {
+test('Rendering icon', () => {
         render(<Component data={data} />);
 
         const someIcon = document.querySelector('.label-some-icon');
