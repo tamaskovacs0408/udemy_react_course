@@ -682,6 +682,8 @@ function Layout() {
 
 Each route can define a "loader" function to provide data to the route element before it renders. **Important!** This feature only works if using a data router! As the user navigates around the app, the loaders for the next matching branch of routes will be called in parallel and their data made available to components through `useLoaderData`.
 
+The `loader`for a page will be called when we start navigating to that page, not after the page component has been rendered, but before actually go there.
+
 ##### useLoaderData
 
 [Documentation](https://reactrouter.com/en/main/hooks/use-loader-data)
