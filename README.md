@@ -686,13 +686,15 @@ Each route can define a "loader" function to provide data to the route element b
 
 [Documentation](https://reactrouter.com/en/main/hooks/use-loader-data)
 
+The `useLoaderData` is cannot be used in a higher level where we fetching the data. This means, that we can only use `useLoaderData` in the element that's assigned to a route and in all components that might be used inside that element.
+
 This hook provides the value returned from your route loader.
 After route actions are called, the data will be revalidated automatically and return the latest result from your loader.
 
-Note that useLoaderData does not initiate a fetch. It simply reads the result of a fetch React Router manages internally, so you don't need to worry about it refetching when it re-renders for reasons outside of routing.
+Note that `useLoaderData` does not initiate a fetch. It simply reads the result of a fetch React Router manages internally, so you don't need to worry about it refetching when it re-renders for reasons outside of routing.
 
 This also means data returned is stable between renders, so you can safely pass it to dependency arrays in React hooks like useEffect. It only changes when the loader is called again after actions or certain navigations. In these cases the identity will change (even if the values don't).
 
 You can use this hook in any component or any custom hook, not just the Route element. It will return the data from the nearest route on context.
 
-To get data from any active route on the page, see useRouteLoaderData.
+To get data from any active route on the page, see `useRouteLoaderData`.
