@@ -1,16 +1,20 @@
 import { useLoaderData } from 'react-router-dom';
+import React, { memo, lazy } from 'react';
 
-import EventsList from '../components/EventsList';
+const EventsList = lazy(() => import('../components/EventsList'));
+
+const MemoizedEventsList = memo(EventsList);
 
 function EventsPage() {
   const events = useLoaderData();
 
   return (
     <>
-      {<EventsList events={events} />}
+      <MemoizedEventsList events={events} />
     </>
   );
 }
+
 
 export default EventsPage;
 
