@@ -15,12 +15,11 @@ function EventsPage() {
 export default EventsPage;
 
 export async function loader() {
-    const response = await fetch("http://localhost:8080/events");
+    const eventsURL = "http://localhost:8080/events";
+    const response = await fetch(eventsURL);
 
-    if (!response.ok) {
-      
-    } else {
-      const resData = await response.json();
-      return resData.events;
+    if (response.ok) {
+        const eventData = await response.json();
+        return eventData.events;
     }
 }
