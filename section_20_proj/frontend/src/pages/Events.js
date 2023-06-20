@@ -12,6 +12,10 @@ const MemoizedEventsList = memo(EventsList);
  */
 function EventsPage() {
   const data = useLoaderData();
+
+  if (data.isError) {
+    return <div>Error: {data.message}</div>;}
+
   const events = data.events;
 
   return (
@@ -34,7 +38,7 @@ export async function loader() {
     const response = await fetch(eventsURL);
 
     if (!response.ok) {
-        // ...
+        return {isError: true, message: 'Couldn\'t fetch events.'};
     } else {
       return response;
     }
