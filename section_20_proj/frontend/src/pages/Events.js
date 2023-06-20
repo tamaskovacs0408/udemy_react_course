@@ -1,7 +1,7 @@
-import { useLoaderData } from 'react-router-dom';
-import React, { memo, lazy } from 'react';
+import { useLoaderData } from "react-router-dom";
+import React, { memo, lazy } from "react";
 
-const EventsList = lazy(() => import('../components/EventsList'));
+const EventsList = lazy(() => import("../components/EventsList"));
 
 const MemoizedEventsList = memo(EventsList);
 
@@ -13,8 +13,8 @@ const MemoizedEventsList = memo(EventsList);
 function EventsPage() {
   const data = useLoaderData();
 
-  if (data.isError) {
-    return <div>Error: {data.message}</div>;}
+  // if (data.isError) {
+  //   return <div>Error: {data.message}</div>;}
 
   const events = data.events;
 
@@ -25,7 +25,6 @@ function EventsPage() {
   );
 }
 
-
 export default EventsPage;
 
 /**
@@ -34,12 +33,13 @@ export default EventsPage;
  * @return {Promise<Response>} The response if it is OK.
  */
 export async function loader() {
-    const eventsURL = "http://localhost:8080/events";
-    const response = await fetch(eventsURL);
+  const eventsURL = "http://localhost:8080/events";
+  const response = await fetch(eventsURL);
 
-    if (!response.ok) {
-        return {isError: true, message: 'Couldn\'t fetch events.'};
-    } else {
-      return response;
-    }
+  if (!response.ok) {
+    // return {isError: true, message: 'Couldn\'t fetch events.'};
+    throw { message: "Couldn't fetch events." };
+  } else {
+    return response;
+  }
 }
