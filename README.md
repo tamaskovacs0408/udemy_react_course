@@ -700,3 +700,9 @@ This also means data returned is stable between renders, so you can safely pass 
 You can use this hook in any component or any custom hook, not just the Route element. It will return the data from the nearest route on context.
 
 To get data from any active route on the page, see `useRouteLoaderData`.
+
+A ReactRouter `Loader` és `useLoaderData` komponensei segítségével adatokat tölthetünk be a komponenseinkbe a React Router használata során. A `Loader` komponens segítségével aszinkron adatokat tölthetünk be a komponensünkbe, és amíg a `Loader` komponens betölti az adatokat, addig egy másik komponenst jeleníthetünk meg. A `useLoaderData` hook segítségével pedig a betöltött adatokat adhatjuk át a komponensünknek, és ezzel dinamikusabbá tehetjük a komponenseinket.
+
+Az adatbetöltés aszinkron jellege miatt a `Loader` és `useLoaderData` komponensek használata lehetővé teszi, hogy a felhasználói felület ne fagyjon le az adatok betöltése közben. Emellett a `Loader` komponens segítségével egy átmeneti állapotot is megjeleníthetünk, amíg az adatok betöltődnek, ami jobb felhasználói élményt nyújt.
+
+Összességében a ReactRouter `Loader` és `useLoaderData` komponensei nagyon hasznosak lehetnek, ha dinamikusabbá szeretnénk tenni a React Router alkalmazásunkat, és ha az adatbetöltési folyamatot jobb felhasználói élménnyel szeretnénk kiegészíteni.
