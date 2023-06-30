@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, json } from "react-router-dom";
 import React, { memo, lazy } from "react";
 
 const EventsList = lazy(() => import("../components/EventsList"));
@@ -38,7 +38,9 @@ export async function loader() {
 
   if (!response.ok) {
     // return {isError: true, message: 'Couldn\'t fetch events.'};
-    throw new Response(JSON.stringify({ message: "Couldn't fetch events." }), {status: 500});
+    // throw new Response(JSON.stringify({ message: "Couldn't fetch events." }), {status: 500});
+    // With the json() method, we can parse the response body as JSON and don't have to use the JSON.stringify() method (and the JSON.parse() method in the Error.js)
+    return json({ message: "Couldn't fetch events." }, { status: 500 });
   } else {
     return response;
   }
