@@ -28,9 +28,9 @@ function EventsPage() {
 export default EventsPage;
 
 /**
- * Asynchronously loads events from a URL and returns the response if it is OK.
- *
- * @return {Promise<Response>} The response if it is OK.
+ * Fetches events from a given URL.
+ * @returns {Promise<Response>} A promise that resolves to the response object.
+ * @throws {Response} If the fetch was unsuccessful.
  */
 export async function loader() {
   const eventsURL = "http://localhost:8080/events";
@@ -38,7 +38,7 @@ export async function loader() {
 
   if (!response.ok) {
     // return {isError: true, message: 'Couldn\'t fetch events.'};
-    throw { message: "Couldn't fetch events." };
+    throw new Response(JSON.stringify({ message: "Couldn't fetch events." }), {status: 500});
   } else {
     return response;
   }
