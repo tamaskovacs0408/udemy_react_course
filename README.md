@@ -511,6 +511,14 @@ waitForDOMElement('input#header-search-input').then((elm) => {
 
 First, we need to install the React Router via `npm i react-router-dom`
 
+A React Router könyvtárban a <BrowserRouter> és a createBrowserRouter két különböző módja a BrowserRouter komponens használatának.
+
+<BrowserRouter>: Ez a komponens JSX-ben használható és deklaratív módon definiálja a BrowserRouter-t. A <BrowserRouter> komponens egy wrapper komponens, amely beágyazza az alkalmazásodat a böngésző címsorának kezelésére. Ez az egyik leggyakrabban használt módszer a React Routerben.
+
+createBrowserRouter: Ez a függvényalapú megközelítés, amelyet programozottan használhatsz a BrowserRouter példányának létrehozásához. Ez lehetővé teszi a több példányosítást vagy testelést. A createBrowserRouter függvény visszaadja a BrowserRouter példányát, amelyet majd a komponenseidben használhatsz.
+
+A lényegi különbség tehát abban rejlik, hogy <BrowserRouter> JSX-ben használatos és deklaratív módon definiálja a BrowserRouter-t, míg a createBrowserRouter függvényalapú megközelítés, amelyet programozottan használhatsz.
+
 ### Setup #1
 
 Import `createBrowserRouter` from `react-router-dom`, and call it with the router settings:
