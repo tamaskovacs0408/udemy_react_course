@@ -31,39 +31,51 @@ import Root from "./pages/Root";
 import EventsRoot from "./pages/EventsRoot";
 import Error from "./pages/Error";
 
+// Create a router using the createBrowserRouter function
 const router = createBrowserRouter([
   {
+    // Set the path to "/" and render the <Root /> component
     path: "/",
     element: <Root />,
+    // Render the <Error /> component in case of an error
     errorElement: <Error />,
     children: [
+      // Render the <HomePage /> component for the root path ("/")
       { index: true, element: <HomePage /> },
       {
+        // Set the path to "events" and render the <EventsRoot /> component
         path: "events",
         element: <EventsRoot />,
         children: [
           {
+            // Set the path to an empty string and render the <EventsPage /> component
             path: "",
             element: <EventsPage />,
+            // Use the eventsLoader function to load events
             loader: eventsLoader,
           },
           {
+            // Set the path to ":eventId" and use the eventDetailLoader function to load event details
             path: ":eventId",
             loader: eventDetailLoader,
             children: [
               {
+                // Set the path to an empty string and render the <EventDetailPage /> component
                 path: "",
                 element: <EventDetailPage />,
               },
+              // Render the <NewEventPage /> component for the path "new" under the eventId path
               { path: "new", element: <NewEventPage /> },
             ],
           },
+          // Render the <EditEventPage /> component for the path ":eventId/edit" under the events path
           { path: ":eventId/edit", element: <EditEventPage /> },
         ],
       },
     ],
   },
 ]);
+
 
 function App() {
   return <RouterProvider router={router} />;
