@@ -14,7 +14,9 @@ import { useQuery } from "@tanstack/react-query"
 ...
 const { data, isPending, isError, error } = useQuery({
     queryKey: ["events"],
-    queryFn: fetchEvents
+    queryFn: fetchEvents,
+    staleTime: 5000,
+    //gcTime: 30000
   })
 ```
 Az alábbi kódban egy useQuery hookot használsz a React Query könyvtárból. Ez a hook segít a háttérben történő adatlekérdezéseket kezelni és kezelni a különböző állapotokat, mint például a lekérdezés eredménye, a lekérdezés folyamatban van-e vagy hiba történt-e.
@@ -29,6 +31,12 @@ A useQuery hooknak két kötelező paramétere van:
 
 queryKey: Ezt a tömböt használja a React Query a gyorsítótárazáshoz és a lekérdezések azonosításához. Ebben az esetben az "events" stringet adod meg a kulcsnak.
 queryFn: Ez a függvény felelős a lekérdezés végrehajtásáért. A fetchEvents függvényt adod meg itt, amelyet a lekérdezés során futtat a React Query.
+
+staleTime: Ez a beállítás azt határozza meg, hogy meddig tekinti a hook az adatokat frissnek. Ha a hook újra lekérdezi az adatokat a szerverről, de a staleTime által meghatározott időintervallum alatt van, akkor a hook visszaadja az előzőleg lekért adatokat, amíg a friss adatok érkeznek. Ezáltal lehetővé teszi a lágy gyorsítótárazást és egy jobb felhasználói élményt. Alapértelmezetten a staleTime értéke 0, vagyis minden lekérdezés friss adatokat hoz vissza.
+
+gcTime: Ez a beállítás azt határozza meg, hogy meddig tárolja a React Query a lekérdezési gyorsítótárban az inaktív adatokat. Az inaktív adatok olyan adatok, amelyeket már nem használ a komponens, de még mindig a gyorsítótárban vannak. A gcTime beállítás segítségével az inaktív adatokat idővel eltávolítja a gyorsítótárból, ezáltal optimalizálva a memóriahasználatot. Alapértelmezetten a gcTime értéke 0, vagyis nincs automatikus gyorsítótár törlés.
+
+Ezeket a beállításokat érdemes használni, ha szeretnél finomhangolni az adatok frissítésének és a gyorsítótár tisztításának módját. Például, staleTime-ot lehet használni, hogy csökkentsd a szerverterhelést és gyorsabb választ kapj a felhasználónak, miközben még mindig friss adatokat jelenítesz meg. A gcTime-ot pedig használhatod, hogy optimalizáld a memóriahasználatot és elkerüld a felesleges adatok tárolását a gyorsítótárban.
 
 ```js
 const queryClient = new QueryClient();
