@@ -41,6 +41,55 @@ const handleState = () => {
   };
   ...
 ```
+3. Updating object  - BETTER SOLUTION
+
+A példában létrehozunk egy handleInputChange függvényt, amely a mező nevének (name) és értékének (value) alapján frissíti az állapotot dinamikusan. Ez lehetővé teszi, hogy csak egyetlen kezelőfüggvényt használj a komponensen belül. Az input mezők name attribútumát használjuk azonosítóként, hogy megkülönböztessük a mezőket a handleInputChange függvényben. Ez a módszer hatékonyabb, mert csökkenti a kód ismétlődését, és könnyen karbantarthatóbbá teszi a komponenst. A korábbi megközelítésnél, amikor külön handleNameChange és handleAgeChange függvényeket használtál, volt két külön blokk ugyanolyan logikával. Most csak egyetlen handleInputChange függvényt kell karbantartanod, ami egyszerűbb és könnyebb hibákat elkerülni.
+
+Ezenkívül a dinamikus mezőnevekkel ([name]) való használat lehetővé teszi, hogy a kódban bővítsd vagy csökkentsd a mezők számát anélkül, hogy a kezelőfüggvényeken változtatnál. Így a kód skálázhatóbb lesz, és könnyen alkalmazkodik a jövőbeni változtatásokhoz.
+
+Ezen okok miatt általában javasolt használni a dinamikus mezőneveket az állapotkezelésben, amikor objektumokat használsz React komponensekben.
+
+```js
+export default function App() {
+  const [user, setUser] = useState({ name: "", age: 32 });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target; // Az input-ban lévő name és value-ból olvassa ki
+
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <div className="App">
+      <h2>User name: {user.name}</h2>
+      <h2>User age: {user.age}</h2>
+      <form>
+        <label>
+          Name:
+          <input
+            type="text"
+            onChange={handleChange}
+            value={user.name}
+            name="name"
+          />
+        </label>
+        <label>
+          Age:
+          <input
+            type="number"
+            onChange={handleChange}
+            value={user.age}
+            name="age"
+          />
+        </label>
+      </form>
+    </div>
+  );
+}
+```
 
 ## Passing data from child to parent
 
