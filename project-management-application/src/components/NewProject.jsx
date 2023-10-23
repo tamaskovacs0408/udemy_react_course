@@ -1,3 +1,5 @@
+import Input from "./Input";
+
 const NewProject = () => {
   return (
     <div>
@@ -10,20 +12,9 @@ const NewProject = () => {
         </li>
       </menu>
       <div>
-        <p>
-          <label>Title</label>
-          <textarea />
-        </p>
-        <p>
-          <label>Description</label>
-          <input />
-        </p>
-        <p>
-          <label>
-            Due <Date></Date>
-          </label>
-          <input />
-        </p>
+        <Input label={"Title"} placeholder={"Project title"} />
+        <Input label={"Description"} textarea />
+        <Input label={"Due Date"} />
       </div>
     </div>
   );
