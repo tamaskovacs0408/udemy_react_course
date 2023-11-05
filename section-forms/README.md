@@ -36,3 +36,55 @@ function handleSubmit(event) {
   <input type="email" name="email" />
 </form>
 ```
+
+#### event.target vs event.currentTarget:
+
+A `FormData()`-ban az `event.target` és az `event.currentTarget` ugyanazt az értéket adja vissza, ha a `FormData()` elemre van rendelve az eseménykezelő. A különbség akkor jön létre, ha az eseménykezelőt egy szülőelemre rendelik hozzá, és az eseményt egy gyermekelem aktiválja. Ebben az esetben az `event.target` a gyermekelemet, az `event.currentTarget` pedig a szülőelemet fogja visszaadni.
+
+Például a következő React-kódban az `event.targe`t és az `event.currentTarget` ugyanazt az értéket fogja visszaadni, ha a felhasználó a "submit" gombra kattint:
+
+```jsx
+const Form = () => {
+  const [data, setData] = useState(new FormData());
+
+  const handleSubmit = event => {
+    // event.target és event.currentTarget ugyanazt az értéket fogja visszaadni
+    const formData = new FormData(event.target);
+
+    // Az adatokat a FormData objektumban tároljuk
+    setData(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="name" />
+      <input type="submit" value="Submit" />
+    </form>
+  );
+};
+```
+
+A következő React-kódban az `event.target` a "child" elemet, az `event.currentTarget` pedig a "parent" elemet fogja visszaadni, ha a felhasználó a "child" elemre kattint:
+
+```jsx
+const Form = () => {
+  const [data, setData] = useState(new FormData());
+
+  const handleSubmit = event => {
+    // event.target a "child" elemet fogja visszaadni
+    const formData = new FormData(event.target);
+
+    // Az adatokat a FormData objektumban tároljuk
+    setData(formData);
+  };
+
+  return (
+    <div>
+      <div id="parent">
+        <input type="text" name="name" />
+        <button id="child" onClick={handleSubmit}>Submit</button>
+      </div>
+    </div>
+  );
+};
+```
