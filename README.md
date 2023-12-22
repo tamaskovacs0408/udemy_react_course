@@ -432,6 +432,124 @@ Now, we can reach the context's state through this variable (`somethingCtx.sgSta
 - Shouldn't replace all props communications with props to context
 
 
+### Context API használata
+
+A `Context API` arra jó, hogy egy prop-ot "mélyebben" lévő gyermekkomponensek is megkaphassák, kikerülve a *props drillinget*.
+
+1. Hozzunk létre egy `store` mappát, amiben a context-ek lesznek.
+
+```js
+import { createContext, useState } from 'react';
+
+// Context létrehozása default értékkel
+const ButtonContext = createContext('');
+
+// Provider komponens létrehozása, ami lekezeli a state változást és a függvényeket a 'children'-nek
+const ButtonProvider = ({ children }) => {
+  const [buttonState, setButtonState] = useState('');
+
+  const setButton = (newState) => {
+    setButtonState(newState);
+  }
+
+  // A Provider becsomagolja a childrent, a value-ba pedig átadjuk a szükséges függvényt és az állapotot, amikt fel tudunk használni a különböző komponensekben
+  return (
+    <ButtonContext.Provider value={{ buttonState, setButton }}>
+      {children}
+    </ButtonContext.Provider>
+  )
+};
+
+// Exportáljuk a Context-t és a Provider komponenst
+export { ButtonContext, ButtonProvider };
+```
+
+2. Csomagoljuk be a szükséges komponenseket, amik szeretnénk, hogy hozzáférjenek a context-hez a Provider-el
+
+- Ha csak egy Provider van, akkor az legyen a Wrapper a komponensek körül
+
+```js
+// app.js
+
+function App() {
+  return (
+    <ButtonProvider>
+      <Header />
+      <Main />
+    </ButtonProvider>
+  )
+}
+
+```
+
+- Ha több Provider van, akkor a *provider-hell* elkerüléséhez éremes létrehoznunk egy `ComponentProviderTree` komponenst a `store`-ban, ahova behúzzuk az összes Providert, majd ezt tesszük meg Wrapper-é a szükséges komponensek körül.
+
+```js
+// ComponentProviderTree.js
+
+import { ButtonProvider } from './ButtonProvider';
+import { CountProvider } from './CountProvider';
+
+function ComponentProviderTree({ children }) {
+  return (
+    <ButtonProvider>
+      <CountProvider>
+        {children}
+      </CountProvider>
+    </ButtonProvider>
+  )
+}
+
+// app.js
+
+function App() {
+  return (
+    <ComponentProviderTree>
+      <Header />
+      <Main />
+    </ComponentProviderTree>
+  )
+}
+
+```
+
+3. State beállítása a komponensben
+
+```js
+// Button.js
+
+import { useContext } from "react";
+import { ButtonContext } from "../store/selectedContext";
+export default function Button(props) {
+  const { children } = props;
+
+  const {setButton} = useContext(ButtonContext);
+
+  return (
+    <button onClick={() => setButton('button-title')}>{children}</button>
+  )
+}
+```
+
+4. Beállított state "lekérése" a komponensben
+
+```js
+import { useContext } from "react";
+import { ButtonContext } from "../store/selectedContext";
+
+export default function Title() {
+  const { buttonState } = useContext(ButtonContext);
+
+  return (
+    <>
+      <h1>
+          {buttonState}
+      </h1>
+    </>
+  )
+}
+```
+
 ### React.memo() 
 
 *React.memo* lets skip re-rendering a component when its props are unchanged. It tells React, to watch the component's props what it gets and compare the props values to their previous values and only if that props value changed let the component re-executed. But, if the props value not changed, it prevents the component from re-execution.
