@@ -1,5 +1,13 @@
 # React course
 
+## Vite prop types error
+
+```js
+// .eslintrc
+"react/prop-types": "off",
+
+```
+
 ## The best practice to get the most updated states:
 
 1. 
