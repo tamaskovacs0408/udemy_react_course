@@ -222,8 +222,7 @@ The place is have to be in the `index.html` file (in the `Public` folder). Let's
 </body>
 ```
 
-In the component's file (separate the modal to backdrop and the actual modal) we have to import the `ReactDOM` (we can add different name) from `react-dom`.
-With this `ReactDOM` we can call the `createPortal()` method.
+In the component's file (separate the modal to backdrop and the actual modal) we have to import the `createPortal` method from `'react-dom'`.
 
 The `createPortal()` method takes 2 arguments.
 
@@ -231,14 +230,15 @@ The `createPortal()` method takes 2 arguments.
 2. Pointer to the container in the real DOM (in the `index.html`) where the component should be rendered in, use the DOM API to get this element (`querySelector`, `getElementById`)
 
 ```js
+import { createPortal } from 'react-dom';
 ...
 return (
     <>
-      {ReactDOM.createPortal(
+      {createPortal(
         <Backdrop onCloseModal={onCloseModal} />,
         document.querySelector("#backdrop-root")
       )}
-      {ReactDOM.createPortal(
+      {createPortal(
         <ModalOverlay
           title={title}
           message={message}
