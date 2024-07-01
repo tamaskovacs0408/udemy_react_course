@@ -297,43 +297,197 @@ const nameInputRef = useRef();
 
 ```
 
+Természetesen, lefordítom és kiegészítem a szöveget a korábbi magyarázatommal együtt. Íme a részletes magyar verzió:
+
 ### useEffect hook
 
 `import { useEffect } from "react"`
 
-With the useEffect hook we can handling side effects of a React app. Always add everything you refer to inside of useEffect as a dependency!
+Az useEffect hook segítségével kezelhetjük a React alkalmazás mellékhatásait. Mindig adjunk hozzá minden olyan elemet függőségként, amelyre az useEffect-en belül hivatkozunk!
 
-It takes 2 arguments: `useEffect(()=> {}, [dependencies])`
+Az useEffect két argumentumot vesz fel: `useEffect(() => {}, [dependencies])`
 
- 1. A function that should be executed after every component evaluation if the specified dependencies changed (the side effect codes go here)
- 2. The dependencies of this effect -  the previous function only runs if THIS changes
+1. Egy függvény, amelynek minden komponens kiértékelés után le kell futnia, ha a megadott függőségek megváltoztak (ide kerülnek a mellékhatás kódok).
+2. A hatás függőségei - az előző függvény csak akkor fut le, ha EZEK változnak.
 
- In the dependencies we have to add all dependencies which are in the useEffect function.
+A függőségekhez hozzá kell adnunk minden olyan függőséget, amely az useEffect függvényben szerepel.
 
- **The dependencies tell to the React app, that after every specified component (where the `useEffect` is used) execution rerun the function inside the `useEffect` hook, if one of the dependencies is changed. (Don't put the `useState`'s setState function into the dependencies) If neither of them is changed, the function won't run.**
+**A függőségek jelzik a React alkalmazásnak, hogy minden megadott komponens (ahol az `useEffect`-et használjuk) végrehajtása után futtassa újra az `useEffect` hookon belüli függvényt, ha a függőségek valamelyike megváltozik. (Ne tegyük be a `useState` setState függvényét a függőségek közé.) Ha egyik sem változik, a függvény nem fog lefutni.**
 
-*Debouncing:*
+Kiegészítések és fontos megjegyzések:
 
-We can also implement a `setTimeout()` method inside the `useEffect` hook and set up that the function is delayed by a given time.
+1. Állapotváltozók kezelése:
+   - Ha az effect használ egy state értéket, azt általában bele kell tenni a függőségi tömbbe.
+   ```javascript
+   const [count, setCount] = useState(0);
+   useEffect(() => {
+     document.title = `Ön ${count} alkalommal kattintott`;
+   }, [count]);
+   ```
 
-*Clean up function:*
+2. Props kezelése:
+   - Ha az effect függvény használ prop értékeket, azokat is bele kell tenni.
+   ```javascript
+   useEffect(() => {
+     adatokLekérése(felhasználóId);
+   }, [felhasználóId]);
+   ```
 
-The `useEffect` hook can return a function after its first, function argument. This *clean up* function runs **before** the useEffet's function (it won't run before the very first side effect function).
+3. Context értékek:
+   - Ha az effect használ context-ből származó értékeket, azokat is bele kell tenni.
+   ```javascript
+   const téma = useContext(TémaContext);
+   useEffect(() => {
+     document.body.style.backgroundColor = téma.háttér;
+   }, [téma.háttér]);
+   ```
 
-```js
+4. Callback függvények kezelése:
+   - Ha az effect callback függvényeket használ, amelyek változhatnak, azokat is bele kell tenni.
+   ```javascript
+   useEffect(() => {
+     const időzítő = setInterval(visszahívás, 1000);
+     return () => clearInterval(időzítő);
+   }, [visszahívás]);
+   ```
 
-  useEffect(() => {
-    const identifier = setTimeout(() => {
-      setFormIsValid(
-        enteredEmail.includes("@") && enteredPassword.trim().length > 6
-      );
-    }, 500);
-    return () => {
-      clearTimeout(identifier);
-    };
-  }, [setFormIsValid, enteredEmail, enteredPassword]);
+*Debouncing (késleltetés):*
+Az `useEffect` hookon belül implementálhatunk egy `setTimeout()` metódust, és beállíthatjuk, hogy a függvény egy adott idővel késleltetve fusson le.
 
+*Tisztító (clean up) függvény:*
+Az `useEffect` hook visszaadhat egy függvényt az első, függvény argumentuma után. Ez a *tisztító* függvény az useEffect függvénye **előtt** fut le (az első mellékhatás függvény előtt nem fog lefutni).
+
+```javascript
+useEffect(() => {
+  const azonosító = setTimeout(() => {
+    setŰrlapÉrvényes(
+      megadottEmail.includes("@") && megadottJelszó.trim().length > 6
+    );
+  }, 500);
+  return () => {
+    clearTimeout(azonosító);
+  };
+}, [setŰrlapÉrvényes, megadottEmail, megadottJelszó]);
 ```
+
+További fontos megjegyzések:
+
+- Üres függőségi tömb `[]` használata esetén az effect csak egyszer, a komponens első renderelésekor fut le.
+- Kerüljük a beágyazott objektumok vagy tömbök közvetlen használatát a függőségi tömbben, mert ezek minden rendereléskor új referenciát kapnak.
+- Az ESLint `react-hooks` plugin használata segíthet a függőségek helyes kezelésében.
+- A `useEffect` hook használata segít elkerülni a felesleges újrarendereléseket és optimalizálni az alkalmazás teljesítményét.
+
+Ez a részletes magyarázat segít megérteni az `useEffect` hook működését és helyes használatát a React alkalmazásokban.
+
+#### useEffect dependency array
+
+A `useEffect` hook dependency array-jének helyes használata kulcsfontosságú a React alkalmazások optimális működéséhez és a felesleges újrarenderelések elkerüléséhez. Nézzük meg részletesen, mit érdemes és mit nem érdemes beletenni:
+
+Mit érdemes beletenni a dependency array-be:
+
+1. Állapotváltozók (state): 
+   - Ha az effect használ egy state értéket, azt általában bele kell tenni a dependency array-be.
+   ```javascript
+   const [count, setCount] = useState(0);
+   useEffect(() => {
+     document.title = `You clicked ${count} times`;
+   }, [count]);
+   ```
+
+2. Props:
+   - Ha az effect függvény használ prop értékeket, azokat is bele kell tenni.
+   ```javascript
+   useEffect(() => {
+     fetchData(userId);
+   }, [userId]);
+   ```
+
+3. Context értékek:
+   - Ha az effect használ context-ből származó értékeket, azokat is bele kell tenni.
+   ```javascript
+   const theme = useContext(ThemeContext);
+   useEffect(() => {
+     document.body.style.backgroundColor = theme.background;
+   }, [theme.background]);
+   ```
+
+4. Komponensen kívül definiált változók:
+   - Ha az effect olyan változókat használ, amelyek a komponensen kívül vannak definiálva és változhatnak, azokat is bele kell tenni.
+
+5. Callback függvények:
+   - Ha az effect callback függvényeket használ, amelyek változhatnak, azokat is bele kell tenni.
+   ```javascript
+   useEffect(() => {
+     const timer = setInterval(callback, 1000);
+     return () => clearInterval(timer);
+   }, [callback]);
+   ```
+
+Mit nem érdemes beletenni:
+
+1. Konstans értékek:
+   - Ha egy érték soha nem változik a komponens életciklusa során, nem kell beletenni.
+   ```javascript
+   const CONSTANT_VALUE = 42;
+   useEffect(() => {
+     // CONSTANT_VALUE használata
+   }, []); // Nem kell beletenni a CONSTANT_VALUE-t
+   ```
+
+2. Utility függvények:
+   - Ha egy függvény nem függ a komponens állapotától vagy props-jaitól, és mindig ugyanúgy viselkedik, nem kell beletenni.
+   ```javascript
+   const formatDate = (date) => {
+     // dátum formázása
+   };
+   useEffect(() => {
+     // formatDate használata
+   }, []); // Nem kell beletenni a formatDate-et
+   ```
+
+3. setState függvények:
+   - A React garantálja, hogy ezek stabilak maradnak a renderelések között, így nem kell őket beletenni.
+   ```javascript
+   const [count, setCount] = useState(0);
+   useEffect(() => {
+     // setCount használata
+   }, []); // Nem kell beletenni a setCount-ot
+   ```
+
+4. Ref-ek:
+   - A `useRef` által létrehozott ref objektumok szintén stabilak, nem kell őket beletenni.
+   ```javascript
+   const inputRef = useRef(null);
+   useEffect(() => {
+     // inputRef használata
+   }, []); // Nem kell beletenni az inputRef-et
+   ```
+
+5. Beágyazott objektumok vagy tömbök:
+   - Kerüljük a közvetlenül az effect-ben létrehozott objektumok vagy tömbök dependency array-be helyezését, mert ezek minden rendereléskor új referenciát kapnak.
+   ```javascript
+   // Kerülendő:
+   useEffect(() => {
+     // ...
+   }, [{ id: 1 }]); // Ez minden rendereléskor új objektum
+
+   // Helyette használjuk az objektum primitív értékeit:
+   useEffect(() => {
+     // ...
+   }, [id]);
+   ```
+
+Fontos megjegyezni, hogy ha az ESLint-et használjuk a `react-hooks` plugin-nel, az gyakran figyelmeztet minket, ha valamit ki kell hagynunk vagy be kell tennünk a dependency array-be.
+
+Végül, ha egy effect-nek nincs függősége és csak egyszer kell lefutnia a komponens mountolásakor, használhatunk egy üres dependency array-t:
+
+```javascript
+useEffect(() => {
+  // Csak egyszer fut le
+}, []);
+```
+
+Ez a megközelítés segít optimalizálni az alkalmazást és elkerülni a felesleges újrarendereléseket vagy végtelen ciklusokat.
 
 ### useReducer hook
 
