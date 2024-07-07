@@ -145,7 +145,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage /> }, // we are using index: true, because the HomePage component route shows the exacp path as the parent component's (Layout) route 
       { path: "/products", element: <ProductsPage /> },
     ],
   },
