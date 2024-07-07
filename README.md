@@ -168,6 +168,8 @@ In the component, import named the `module.css` file (the name is totally up to 
 
 Then the css classes have to be added with the following syntax: (the class name, as it defined in the css file)
 
+
+
 ```js
 import styles from "./Button.module.css"
 ...
@@ -189,6 +191,70 @@ Media queries works as like as in common css files.
 #### SCSS Modules
 
 Have to install sass to the project with `npm i sass`. The file names should be `*.module.scss`. After that, everything works like as in the CSS modules, but with the SASS/SCSS syntax. We don't have to start the *Watch Sass*!
+
+#### globals in css/scss modules
+
+A `:global` direktíva használata a CSS modulok sajátosságaiból ered. Lássuk, miért is van szükség rá:
+
+1. CSS modulok működése:
+   - A CSS modulok alapvetően "lokalizálják" a CSS osztályneveket, hogy elkerüljék a név-ütközéseket különböző komponensek között.
+   - Ezt úgy érik el, hogy minden osztálynevet egyedi azonosítóval látnak el (például `.navbar` helyett valami ilyesmit generálnak: `.navbar_a1b2c3`).
+
+2. Az `active` osztály eredete:
+   - Az `active` osztályt a React Router adja hozzá dinamikusan az aktív linkhez.
+   - Ez az osztály nem része a te CSS modulodnak, hanem "globálisan" van hozzáadva.
+
+3. A `:global` szerepe:
+   - A `:global` direktíva jelzi a CSS modul rendszernek, hogy ne "lokalizálja" az adott szelektort vagy annak egy részét.
+   - Ez lehetővé teszi, hogy olyan osztályokra vagy elemekre hivatkozz, amelyek kívül esnek a CSS modul hatókörén.
+
+Példa a különbségre:
+
+```scss
+// CSS modul nélkül vagy :global használatával
+.navbar a.active { ... }
+
+// CSS modullal
+.navbar :global(.active) { ... }
+```
+
+Az első esetben a `.navbar` lokalizálva lesz, de az `active` nem (mert az globális). A második esetben explicit módon jelezzük, hogy az `active` osztály globális, és nem kell lokalizálni.
+
+Mikor hagyhatod el a `:global`-t:
+
+1. Ha nem használsz CSS modulokat a projektben.
+2. Ha az adott CSS fájl nincs CSS modulként kezelve (például nincs `.module.scss` kiterjesztése).
+3. Ha a teljes fájlt globális stíluslapként akarod kezelni, használhatsz `:global` wrappet az egész fájl tartalmára.
+
+Összefoglalva, a `:global` használata lehetővé teszi, hogy a CSS modulok környezetében is hivatkozhass olyan osztályokra vagy elemekre, amelyek kívül esnek a modul lokális hatókörén, mint például a React Router által dinamikusan hozzáadott `active` osztály.
+
+```scss
+
+li {
+        display: inline-block;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        border: 1px solid white;
+        border-radius: .5rem;
+        color: white;
+        background: transparent;
+        padding: .5rem;
+        transition: all 0.3s ease;  
+
+        &:has(> :global(.active)) {
+            box-shadow: 1px 1px 4px 3px #fff;
+            border-color: transparent;
+          }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+    }
+
+```
 
 ### Accept incoming css classes from another component
 
