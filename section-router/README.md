@@ -77,7 +77,7 @@ import { Link } from "react-router-dom";
 ### NavLink
 
 The other way to navigate between pages is the `NavLink` component.
-It's a better way, when we using a navigation bar, because we can set active style for the active links. It's `className` works like a normal className, but you can also pass it a function to customize the classNames applied based on the active and pending state of the link. The `isActive` and the `isPending` are coming from the `React Router Dom`.
+It's a better way, when we using a navigation bar, because **we can set active style for the active links**. It's `className` works like a normal className, but you can also pass it a function to customize the classNames applied based on the active and pending state of the link. The `isActive` and the `isPending` are coming from the `React Router Dom`.
 
 ```js
 <NavLink
